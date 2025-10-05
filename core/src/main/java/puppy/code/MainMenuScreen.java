@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-
 public class MainMenuScreen implements Screen {
-
 	final GameLluviaMenu game;
 	private SpriteBatch batch;
 	private BitmapFont font;
@@ -46,37 +44,37 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
