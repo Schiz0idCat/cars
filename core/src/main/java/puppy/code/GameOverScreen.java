@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import puppy.code.schema.GameConfig;
+
 public class GameOverScreen implements Screen {
     private final GameLluviaMenu game;
     private SpriteBatch batch;
@@ -28,8 +30,9 @@ public class GameOverScreen implements Screen {
         this.batch.setProjectionMatrix(this.camera.combined);
 
         this.batch.begin();
-        this.font.draw(this.batch, "GAME OVER ", 100, 200);
-        this.font.draw(this.batch, "Toca en cualquier lado para reiniciar.", 100, 100);
+        this.camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+        this.font.draw(this.batch, "GAME OVER ", 100, GameConfig.SCREEN_HEIGHT / 2 + 50);
+        this.font.draw(this.batch, "Toca en cualquier lado para reiniciar.", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
         this.batch.end();
 
         if (Gdx.input.isTouched()) {

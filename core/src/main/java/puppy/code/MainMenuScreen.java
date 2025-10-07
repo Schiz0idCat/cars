@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import puppy.code.schema.GameConfig;
+
 public class MainMenuScreen implements Screen {
 	final GameLluviaMenu game;
 	private SpriteBatch batch;
@@ -18,7 +20,7 @@ public class MainMenuScreen implements Screen {
         this.batch = game.getBatch();
         this.font = game.getFont();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 	}
 
 	@Override
@@ -29,9 +31,9 @@ public class MainMenuScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
-		font.getData().setScale(2, 2);
-		font.draw(batch, "Bienvenido a Recolecta Gotas!!! ", 100, camera.viewportHeight/2+50);
-		font.draw(batch, "Toca en cualquier lugar para comenzar!", 100, camera.viewportHeight/2-50);
+        font.getData().setScale(2f, 2f); // si quieres mantener
+        font.draw(batch, "Bienvenido a Recolecta Gotas!!! ", 100, GameConfig.SCREEN_HEIGHT / 2 + 50);
+        font.draw(batch, "Toca en cualquier lugar para comenzar!", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
 
 		batch.end();
 

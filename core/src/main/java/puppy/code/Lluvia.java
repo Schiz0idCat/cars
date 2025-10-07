@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import puppy.code.schema.GameConfig;
+import puppy.code.schema.RainConfig;
+
 public class Lluvia {
     private Array<Rectangle> rainDropsPos;
     private Array<Integer> rainDropsType;
@@ -37,34 +40,33 @@ public class Lluvia {
 
     private void crearGotaDeLluvia() {
         Rectangle raindrop = new Rectangle();
-        raindrop.x = MathUtils.random(0, 800-64);
-        raindrop.y = 480;
-        raindrop.width = 64;
-        raindrop.height = 64;
+        raindrop.x = MathUtils.random(0, GameConfig.SCREEN_WIDTH - RainConfig.DROP_WIDTH);
+        raindrop.y = GameConfig.SCREEN_HEIGHT;
+        raindrop.width = RainConfig.DROP_WIDTH;
+        raindrop.height = RainConfig.DROP_HEIGHT;
 
         this.rainDropsPos.add(raindrop);
 
-        // ver el tipo de gota
-        if (MathUtils.random(1,10) < 5) {
-            this.rainDropsType.add(1);
-        }
-        else {
-            rainDropsType.add(2);
-            lastDropTime = TimeUtils.nanoTime();
-        }
+        // Definimos el tipo de gota usando enteros
+        int tipo = MathUtils.random(1, 10) < 5 ? RainConfig.TYPE_EVIL : RainConfig.TYPE_FRIENDLY;
+        this.rainDropsType.add(tipo);
+
+        lastDropTime = TimeUtils.nanoTime();
     }
 
     public boolean actualizarMovimiento(Tarro tarro) {
         // generar gotas de lluvia
-        if(TimeUtils.nanoTime() - lastDropTime > 100000000) crearGotaDeLluvia();
+        if (TimeUtils.nanoTime() - lastDropTime > RainConfig.DROP_GENERATION_INTERVAL_NS) {
+            crearGotaDeLluvia();
+        }
 
         // revisar si las gotas cayeron al suelo o chocaron con el tarro
         for (int i = 0; i < rainDropsPos.size; i++ ) {
             Rectangle raindrop = rainDropsPos.get(i);
-            raindrop.y -= 300 * Gdx.graphics.getDeltaTime();
+            raindrop.y -= RainConfig.DROP_SPEED * Gdx.graphics.getDeltaTime();
 
             //cae al suelo y se elimina
-            if (raindrop.y + 64 < 0) {
+            if (raindrop.y + RainConfig.DROP_HEIGHT < 0) {
                 rainDropsPos.removeIndex(i);
                 rainDropsType.removeIndex(i);
             }

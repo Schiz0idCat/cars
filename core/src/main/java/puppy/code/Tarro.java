@@ -1,5 +1,8 @@
 package puppy.code;
 
+import puppy.code.schema.BucketConfig;
+import puppy.code.schema.GameConfig;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
@@ -22,11 +25,11 @@ public class Tarro {
     public Tarro(Texture tex, Sound ss) {
         this.bucketImage = tex;
         this.sonidoHerido = ss;
-        this.vidas = 3;
+        this.vidas = BucketConfig.START_LIVES;
         this.puntos = 0;
-        this.velx = 400;
+        this.velx = BucketConfig.SPEED;
         this.herido = false;
-        this.tiempoHeridoMax = 50;
+        this.tiempoHeridoMax = BucketConfig.DAMAGE_ANIMATION_TICKS;
     }
 
     public int getVidas() {
@@ -51,10 +54,10 @@ public class Tarro {
 
     public void crear() {
         this.bucket = new Rectangle();
-        this.bucket.x = 800 / 2 - 64 / 2;
-        this.bucket.y = 20;
-        this.bucket.width = 64;
-        this.bucket.height = 64;
+        this.bucket.x = GameConfig.SCREEN_WIDTH / 2 - BucketConfig.WIDTH / 2;
+        this.bucket.y = BucketConfig.START_Y_POSITION;
+        this.bucket.width = BucketConfig.WIDTH;
+        this.bucket.height = BucketConfig.HEIGHT;
     }
 
     public void dañar() {
@@ -102,8 +105,8 @@ public class Tarro {
             bucket.x = 0;
         }
 
-        if (this.bucket.x > 800 - 64) {
-            this.bucket.x = 800 - 64;
+        if (this.bucket.x > GameConfig.SCREEN_WIDTH - BucketConfig.WIDTH) {
+            this.bucket.x = GameConfig.SCREEN_WIDTH - BucketConfig.WIDTH;
         }
     }
 

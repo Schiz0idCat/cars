@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import puppy.code.schema.GameConfig;
+
 public class PausaScreen implements Screen {
 	private final GameLluviaMenu game;
 	private GameScreen juego;
@@ -20,7 +22,7 @@ public class PausaScreen implements Screen {
         this.batch = game.getBatch();
         this.font = game.getFont();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 	}
 
 	@Override
@@ -31,49 +33,49 @@ public class PausaScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
-		font.draw(batch, "Juego en Pausa ", 100, 150);
-		font.draw(batch, "Toca en cualquier lado para continuar !!!", 100, 100);
-		batch.end();
+        font.draw(batch, "Juego en Pausa ", 100, GameConfig.SCREEN_HEIGHT - 150);
+        font.draw(batch, "Toca en cualquier lado para continuar !!!", 100, GameConfig.SCREEN_HEIGHT - 200);
+        batch.end();
 
-		if (Gdx.input.isTouched()) {
-			game.setScreen(juego);
-			dispose();
-		}
-	}
+        if (Gdx.input.isTouched()) {
+            game.setScreen(juego);
+            dispose();
+        }
+    }
 
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
+    @Override
+    public void show() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+    @Override
+    public void resize(int width, int height) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
+    @Override
+    public void pause() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
+    @Override
+    public void resume() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
+    @Override
+    public void hide() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
+    @Override
+    public void dispose() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 }

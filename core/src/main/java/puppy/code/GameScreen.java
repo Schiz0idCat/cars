@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import puppy.code.schema.GameConfig;
+
 public class GameScreen implements Screen {
     final GameLluviaMenu game;
     private OrthographicCamera camera;
@@ -39,7 +41,7 @@ public class GameScreen implements Screen {
 
         // camera
         this.camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         this.batch = new SpriteBatch();
         // creacion del tarro
         this.tarro.crear();
@@ -58,9 +60,9 @@ public class GameScreen implements Screen {
         this.batch.setProjectionMatrix(camera.combined);
         this.batch.begin();
         //dibujar textos
-        this.font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, 475);
-        this.font.draw(batch, "Vidas : " + tarro.getVidas(), 670, 475);
-        this.font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2-50, 475);
+        this.font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, GameConfig.SCREEN_HEIGHT - 5);
+        this.font.draw(batch, "Vidas : " + tarro.getVidas(), GameConfig.SCREEN_WIDTH - 130, GameConfig.SCREEN_HEIGHT - 5);
+        this.font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2 - 50, GameConfig.SCREEN_HEIGHT - 5);
 
         if (!this.tarro.getHerido()) {
             // movimiento del tarro desde teclado
