@@ -98,9 +98,21 @@ public class Tarro extends GameObject {
         }
 
         // Limitar movimiento dentro de la pantalla
-        if (this.x < 0) this.x = 0;
-        if (this.x > GameConfig.SCREEN_WIDTH - this.width)
+        if (this.x < 0) {
+            this.x = 0;
+        }
+
+        if (this.x > GameConfig.SCREEN_WIDTH - this.width) {
             this.x = GameConfig.SCREEN_WIDTH - this.width;
+        }
+
+        if (this.herido) {
+            this.tiempoHerido--;
+            if (this.tiempoHerido <= 0) {
+                this.herido = false;
+                this.tiempoHerido = 0;
+            }
+        }
     }
 
     public void destruir() {
