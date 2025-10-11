@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
 
         if (!this.tarro.getHerido()) {
             // movimiento del tarro desde teclado
-            this.tarro.actualizarMovimiento();
+            this.tarro.actualizar(delta);
 
             // caida de la lluvia
             if (!this.lluvia.actualizarMovimiento(this.tarro)) {
