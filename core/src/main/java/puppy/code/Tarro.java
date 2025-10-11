@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Tarro {
+public class Tarro extends GameObject {
     private Rectangle bucket;
     private Texture bucketImage;
     private Sound sonidoHerido;
@@ -23,6 +23,13 @@ public class Tarro {
     private int tiempoHerido;
 
     public Tarro(Texture tex, Sound ss) {
+        super(
+            GameConfig.SCREEN_WIDTH / 2f - BucketConfig.WIDTH / 2f, // posición x
+            BucketConfig.START_Y_POSITION,                          // posición y
+            BucketConfig.WIDTH,                                     // ancho
+            BucketConfig.HEIGHT                                     // alto
+        );
+
         this.bucketImage = tex;
         this.sonidoHerido = ss;
         this.vidas = BucketConfig.START_LIVES;
@@ -30,6 +37,8 @@ public class Tarro {
         this.velx = BucketConfig.SPEED;
         this.herido = false;
         this.tiempoHeridoMax = BucketConfig.DAMAGE_ANIMATION_TICKS;
+
+        this.bucket = new Rectangle(this.x, this.y, this.width, this.height);
     }
 
     public int getVidas() {
@@ -67,47 +76,31 @@ public class Tarro {
         this.sonidoHerido.play();
     }
 
+    @Override
     public void dibujar(SpriteBatch batch) {
         if (!this.herido) {
-            batch.draw(this.bucketImage, this.bucket.x, this.bucket.y);
-
-            return;
+            batch.draw(this.bucketImage, this.x, this.y);
         }
-
-        batch.draw(this.bucketImage, this.bucket.x, this.bucket.y + MathUtils.random(-5,5));
-        this.tiempoHerido--;
-
-        if (this.tiempoHerido <= 0) {
-            this.herido = false;
+        else {
+            batch.draw(this.bucketImage, this.x, this.y + MathUtils.random(-5, 5));
         }
     }
 
-    public void actualizarMovimiento() {
-        // movimiento desde mouse/touch
-        /*if(Gdx.input.isTouched()) {
-                  Vector3 touchPos = new Vector3();
-                  touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                  camera.unproject(touchPos);
-                  bucket.x = touchPos.x - 64 / 2;
-            }*/
-
-        //movimiento desde teclado
+    @Override
+    public void actualizar(float delta) {
+        // Movimiento con teclado
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            this.bucket.x -= this.velx * Gdx.graphics.getDeltaTime();
+            this.x -= this.velx * delta;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.bucket.x += this.velx * Gdx.graphics.getDeltaTime();
+            this.x += this.velx * delta;
         }
 
-        // que no se salga de los bordes izq y der
-        if (this.bucket.x < 0) {
-            bucket.x = 0;
-        }
-
-        if (this.bucket.x > GameConfig.SCREEN_WIDTH - BucketConfig.WIDTH) {
-            this.bucket.x = GameConfig.SCREEN_WIDTH - BucketConfig.WIDTH;
-        }
+        // Limitar movimiento dentro de la pantalla
+        if (this.x < 0) this.x = 0;
+        if (this.x > GameConfig.SCREEN_WIDTH - this.width)
+            this.x = GameConfig.SCREEN_WIDTH - this.width;
     }
 
     public void destruir() {
