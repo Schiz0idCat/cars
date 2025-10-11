@@ -9,108 +9,106 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 
-public class Tarro {
-    private Rectangle bucket;
-    private Texture bucketImage;
-    private Sound sonidoHerido;
+/**
+ * Representa el tarro controlado por el jugador.
+ * Puede moverse, recibir daño y acumular puntos.
+ */
+public class Tarro extends GameObject {
+    private final Sound sonidoHerido;
     private int vidas;
     private int puntos;
     private int velx;
     private boolean herido;
     private int tiempoHeridoMax;
-    private int tiempoHerido;
+    private float tiempoHeridoActual;
 
     public Tarro(Texture tex, Sound ss) {
-        this.bucketImage = tex;
+        super(
+            GameConfig.SCREEN_WIDTH / 2f - BucketConfig.WIDTH / 2f, // posición x
+            BucketConfig.START_Y_POSITION,                          // posición y
+            BucketConfig.WIDTH,                                     // ancho
+            BucketConfig.HEIGHT                                     // alto
+        );
+
+        this.texture = tex;
         this.sonidoHerido = ss;
         this.vidas = BucketConfig.START_LIVES;
         this.puntos = 0;
         this.velx = BucketConfig.SPEED;
         this.herido = false;
         this.tiempoHeridoMax = BucketConfig.DAMAGE_ANIMATION_TICKS;
+        this.tiempoHeridoActual = 0;
     }
 
-    public int getVidas() {
-        return this.vidas;
-    }
+    // === Getters ===
+    public int getVidas() { return this.vidas; }
+    public int getPuntos() { return this.puntos; }
+    public boolean getHerido() { return this.herido; }
 
-    public int getPuntos() {
-        return this.puntos;
-    }
-
-    public Rectangle getArea() {
-        return this.bucket;
-    }
-
-    public boolean getHerido() {
-        return this.herido;
-    }
-
+    // === Lógica principal ===
     public void sumarPuntos(int pp) {
         this.puntos += pp;
     }
 
     public void crear() {
-        this.bucket = new Rectangle();
-        this.bucket.x = GameConfig.SCREEN_WIDTH / 2 - BucketConfig.WIDTH / 2;
-        this.bucket.y = BucketConfig.START_Y_POSITION;
-        this.bucket.width = BucketConfig.WIDTH;
-        this.bucket.height = BucketConfig.HEIGHT;
+        this.setPos(GameConfig.SCREEN_WIDTH / 2f - this.width / 2f, BucketConfig.START_Y_POSITION);
     }
 
     public void dañar() {
+        if (this.herido) return; // evita reactivar daño si ya está en animación
         this.vidas--;
         this.herido = true;
-        this.tiempoHerido = this.tiempoHeridoMax;
+        this.tiempoHeridoActual = this.tiempoHeridoMax;
         this.sonidoHerido.play();
     }
 
+    public void actualizarHerida(float delta) {
+        if (!this.herido) return;
+
+        this.tiempoHeridoActual -= delta * GameConfig.FPS; // si DAMAGE_ANIMATION_TICKS son frames
+        if (this.tiempoHeridoActual <= 0) {
+            this.herido = false;
+            this.tiempoHeridoActual = 0;
+        }
+    }
+
+    @Override
+    public void actualizar(float delta) {
+        // Movimiento
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            this.x -= this.velx * delta;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            this.x += this.velx * delta;
+        }
+
+        // Limitar dentro de pantalla
+        if (this.x < 0) {
+            this.x = 0;
+        }
+
+        if (this.x > GameConfig.SCREEN_WIDTH - this.width) {
+            this.x = GameConfig.SCREEN_WIDTH - this.width;
+        }
+
+        // Actualizar rectángulo de colisión
+        this.area.setPosition(this.x, this.y);
+
+    }
+
+    @Override
     public void dibujar(SpriteBatch batch) {
         if (!this.herido) {
-            batch.draw(this.bucketImage, this.bucket.x, this.bucket.y);
-
-            return;
-        }
-
-        batch.draw(this.bucketImage, this.bucket.x, this.bucket.y + MathUtils.random(-5,5));
-        this.tiempoHerido--;
-
-        if (this.tiempoHerido <= 0) {
-            this.herido = false;
+            batch.draw(this.texture, this.x, this.y);
+        } else {
+            float offsetY = MathUtils.random(-5, 5);
+            batch.draw(this.texture, this.x, this.y + offsetY);
         }
     }
 
-    public void actualizarMovimiento() {
-        // movimiento desde mouse/touch
-        /*if(Gdx.input.isTouched()) {
-                  Vector3 touchPos = new Vector3();
-                  touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                  camera.unproject(touchPos);
-                  bucket.x = touchPos.x - 64 / 2;
-            }*/
-
-        //movimiento desde teclado
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            this.bucket.x -= this.velx * Gdx.graphics.getDeltaTime();
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.bucket.x += this.velx * Gdx.graphics.getDeltaTime();
-        }
-
-        // que no se salga de los bordes izq y der
-        if (this.bucket.x < 0) {
-            bucket.x = 0;
-        }
-
-        if (this.bucket.x > GameConfig.SCREEN_WIDTH - BucketConfig.WIDTH) {
-            this.bucket.x = GameConfig.SCREEN_WIDTH - BucketConfig.WIDTH;
-        }
-    }
-
+    @Override
     public void destruir() {
-        this.bucketImage.dispose();
+        super.destruir(); // libera textura
     }
 }
