@@ -63,6 +63,16 @@ public class Tarro extends GameObject {
         this.sonidoHerido.play();
     }
 
+    public void actualizarHerida(float delta) {
+        if (!this.herido) return;
+
+        this.tiempoHeridoActual -= delta * GameConfig.FPS; // si DAMAGE_ANIMATION_TICKS son frames
+        if (this.tiempoHeridoActual <= 0) {
+            this.herido = false;
+            this.tiempoHeridoActual = 0;
+        }
+    }
+
     @Override
     public void actualizar(float delta) {
         // Movimiento
@@ -74,21 +84,17 @@ public class Tarro extends GameObject {
         }
 
         // Limitar dentro de pantalla
-        if (this.x < 0) this.x = 0;
-        if (this.x > GameConfig.SCREEN_WIDTH - this.width)
+        if (this.x < 0) {
+            this.x = 0;
+        }
+
+        if (this.x > GameConfig.SCREEN_WIDTH - this.width) {
             this.x = GameConfig.SCREEN_WIDTH - this.width;
+        }
 
         // Actualizar rectángulo de colisión
         this.area.setPosition(this.x, this.y);
 
-        // Animación de daño
-        if (this.herido) {
-            this.tiempoHeridoActual--;
-            if (this.tiempoHeridoActual <= 0) {
-                this.herido = false;
-                this.tiempoHeridoActual = 0;
-            }
-        }
     }
 
     @Override

@@ -65,20 +65,20 @@ public class GameScreen implements Screen {
         this.font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2 - 50, GameConfig.SCREEN_HEIGHT - 5);
 
         if (!this.tarro.getHerido()) {
-            // movimiento del tarro desde teclado
+            // movimiento del tarro
             this.tarro.actualizar(delta);
 
-            // caida de la lluvia
+            // caída de la lluvia
             if (!this.lluvia.actualizarMovimiento(this.tarro)) {
-                //actualizar HigherScore
                 if (this.game.getHigherScore() < this.tarro.getPuntos()) {
                     this.game.setHigherScore(tarro.getPuntos());
                 }
 
-                //ir a la ventana de finde juego y destruir la actual
                 this.game.setScreen(new GameOverScreen(game));
                 dispose();
             }
+        } else {
+            this.tarro.actualizarHerida(delta);
         }
 
         this.tarro.dibujar(batch);
