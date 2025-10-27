@@ -61,7 +61,8 @@ public class Tarro extends GameObject implements Playable {
         this.setPos(GameConfig.SCREEN_WIDTH / 2f - this.width / 2f, BucketConfig.START_Y_POSITION);
     }
 
-    public void dañar() {
+    @Override
+    public void herir() {
         if (this.herido) return; // evita reactivar daño si ya está en animación
         this.vidas--;
         this.herido = true;

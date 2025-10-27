@@ -60,7 +60,7 @@ public class Lluvia {
             // Si colisiona con el tarro
             if (gota.colisionaCon(tarro)) {
                 if (gota.esMala()) {
-                    tarro.dañar();
+                    tarro.herir();
                     gotas.removeIndex(i);
 
                     if (tarro.getVidas() <= 0) {

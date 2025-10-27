@@ -7,5 +7,7 @@ public interface Playable {
 
     boolean getHerido();
 
+    void herir();
+
     void sumarPuntos(int pp);
 }
