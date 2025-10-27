@@ -32,17 +32,18 @@ public class Gota extends GameObject {
     }
 
     @Override
-    public void actualizar(float delta) {
+    public void update(float delta) {
         this.y -= super.velY * delta;
         this.area.setPosition(this.x, this.y);
     }
 
     @Override
-    public void dibujar(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         batch.draw(this.texture, this.x, this.y);
     }
 
-    public boolean fueraDePantalla() {
+    @Override
+    public boolean isOutOfScreen() {
         return this.y + this.height < 0;
     }
 

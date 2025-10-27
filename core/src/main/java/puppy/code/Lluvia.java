@@ -49,10 +49,10 @@ public class Lluvia {
         // Recorrer gotas (de atrás hacia adelante por si se eliminan)
         for (int i = gotas.size - 1; i >= 0; i--) {
             Gota gota = gotas.get(i);
-            gota.actualizar(delta);
+            gota.update(delta);
 
             // Si sale de pantalla, eliminarla
-            if (gota.fueraDePantalla()) {
+            if (gota.isOutOfScreen()) {
                 gotas.removeIndex(i);
                 continue;
             }
@@ -79,7 +79,7 @@ public class Lluvia {
 
     public void actualizarDibujoLluvia(SpriteBatch batch) {
         for (Gota gota : gotas) {
-            gota.dibujar(batch);
+            gota.draw(batch);
         }
     }
 

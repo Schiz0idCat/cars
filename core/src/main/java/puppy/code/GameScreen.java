@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
 
         if (!this.tarro.getHerido()) {
             // movimiento del tarro
-            this.tarro.actualizar(delta);
+            this.tarro.update(delta);
 
             // caída de la lluvia
             if (!this.lluvia.actualizarMovimiento(this.tarro)) {
@@ -81,7 +81,7 @@ public class GameScreen implements Screen {
             this.tarro.actualizarHerida(delta);
         }
 
-        this.tarro.dibujar(batch);
+        this.tarro.draw(batch);
         this.lluvia.actualizarDibujoLluvia(batch);
 
         this.batch.end();

@@ -81,7 +81,7 @@ public class Tarro extends GameObject implements Playable {
     }
 
     @Override
-    public void actualizar(float delta) {
+    public void update(float delta) {
         // Movimiento
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             this.x -= this.velX * delta;
@@ -91,6 +91,16 @@ public class Tarro extends GameObject implements Playable {
         }
 
         // Limitar dentro de pantalla
+
+        if (this.isOutOfScreen()) {
+            // Si se sale por la izquierda o derecha, se corrige la posición
+            if (this.x < 0) {
+                this.x = 0;
+            }
+            else if (this.x + this.width > GameConfig.SCREEN_WIDTH) {
+                this.x = GameConfig.SCREEN_WIDTH - this.width;
+            }
+        }
         if (this.x < 0) {
             this.x = 0;
         }
@@ -105,13 +115,21 @@ public class Tarro extends GameObject implements Playable {
     }
 
     @Override
-    public void dibujar(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         if (!this.herido) {
             batch.draw(this.texture, this.x, this.y);
         } else {
             float offsetY = MathUtils.random(-5, 5);
             batch.draw(this.texture, this.x, this.y + offsetY);
         }
+    }
+
+    @Override
+    public boolean isOutOfScreen() {
+        return this.x < 0
+        || this.x + this.width > GameConfig.SCREEN_WIDTH
+        || this.y + this.height < 0
+        || this.y > GameConfig.SCREEN_HEIGHT;
     }
 
     @Override
