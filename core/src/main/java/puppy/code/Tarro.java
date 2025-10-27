@@ -18,7 +18,6 @@ public class Tarro extends GameObject {
     private final Sound sonidoHerido;
     private int vidas;
     private int puntos;
-    private int velx;
     private boolean herido;
     private int tiempoHeridoMax;
     private float tiempoHeridoActual;
@@ -28,14 +27,15 @@ public class Tarro extends GameObject {
             GameConfig.SCREEN_WIDTH / 2f - BucketConfig.WIDTH / 2f, // posición x
             BucketConfig.START_Y_POSITION,                          // posición y
             BucketConfig.WIDTH,                                     // ancho
-            BucketConfig.HEIGHT                                     // alto
+            BucketConfig.HEIGHT,                                    // alto
+            BucketConfig.SPEED,
+            0
         );
 
         this.texture = tex;
         this.sonidoHerido = ss;
         this.vidas = BucketConfig.START_LIVES;
         this.puntos = 0;
-        this.velx = BucketConfig.SPEED;
         this.herido = false;
         this.tiempoHeridoMax = BucketConfig.DAMAGE_ANIMATION_TICKS;
         this.tiempoHeridoActual = 0;
@@ -77,10 +77,10 @@ public class Tarro extends GameObject {
     public void actualizar(float delta) {
         // Movimiento
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            this.x -= this.velx * delta;
+            this.x -= this.velX * delta;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.x += this.velx * delta;
+            this.x += this.velX * delta;
         }
 
         // Limitar dentro de pantalla

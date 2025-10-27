@@ -9,14 +9,15 @@ import puppy.code.schema.RainConfig;
 
 public class Gota extends GameObject {
     private int tipo; // RainConfig.TYPE_FRIENDLY o TYPE_EVIL
-    private float velocidad;
 
     public Gota(Texture texturaBuena, Texture texturaMala) {
         super(
             MathUtils.random(0, GameConfig.SCREEN_WIDTH - RainConfig.DROP_WIDTH),
             GameConfig.SCREEN_HEIGHT,
             RainConfig.DROP_WIDTH,
-            RainConfig.DROP_HEIGHT
+            RainConfig.DROP_HEIGHT,
+            0,
+            RainConfig.DROP_SPEED
         );
 
         // Determinar tipo de gota
@@ -28,13 +29,11 @@ public class Gota extends GameObject {
         this.texture = (this.tipo == RainConfig.TYPE_EVIL)
             ? texturaMala
             : texturaBuena;
-
-        this.velocidad = RainConfig.DROP_SPEED;
     }
 
     @Override
     public void actualizar(float delta) {
-        this.y -= velocidad * delta;
+        this.y -= super.velY * delta;
         this.area.setPosition(this.x, this.y);
     }
 

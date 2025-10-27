@@ -9,14 +9,18 @@ public abstract class GameObject {
     protected float y;
     protected float width;
     protected float height;
+    protected float velX = 0f; // velocidad horizontal
+    protected float velY = 0f; // velocidad vertical
     protected Texture texture;
     protected Rectangle area;
 
-    public GameObject(float x, float y, float width, float height) {
+    public GameObject(float x, float y, float width, float height, float velX, float velY) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.velX = velX;
+        this.velY = velY;
 
         this.area = new Rectangle(x, y, width, height);
     }
