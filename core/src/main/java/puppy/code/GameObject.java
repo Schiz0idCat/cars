@@ -13,13 +13,14 @@ public abstract class GameObject implements Drawable {
     protected Texture texture;
     protected Rectangle area;
 
-    public GameObject(float x, float y, float width, float height, float velX, float velY) {
+    public GameObject(float x, float y, float width, float height, float velX, float velY, Texture tex) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.velX = velX;
         this.velY = velY;
+        this.texture = tex;
 
         this.area = new Rectangle(x, y, width, height);
     }

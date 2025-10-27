@@ -3,7 +3,6 @@ package puppy.code;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -12,15 +11,11 @@ import puppy.code.schema.RainConfig;
 
 public class Lluvia {
     private Array<Gota> gotas;
-    private Texture gotaBuena;
-    private Texture gotaMala;
     private Sound dropSound;
     private Music rainMusic;
     private long lastDropTime;
 
-    public Lluvia(Texture gotaBuena, Texture gotaMala, Sound dropSound, Music rainMusic) {
-        this.gotaBuena = gotaBuena;
-        this.gotaMala = gotaMala;
+    public Lluvia(Sound dropSound, Music rainMusic) {
         this.dropSound = dropSound;
         this.rainMusic = rainMusic;
     }
@@ -34,7 +29,13 @@ public class Lluvia {
     }
 
     private void crearGotaDeLluvia() {
-        this.gotas.add(new Gota(gotaBuena, gotaMala));
+        boolean buena = Math.random() < 0.5;
+
+        Gota nuevaGota = buena
+            ? new GoodNPC(dropSound)
+            : new EvilNPC();
+
+        this.gotas.add(nuevaGota);
         this.lastDropTime = TimeUtils.nanoTime();
     }
 
@@ -58,18 +59,14 @@ public class Lluvia {
             }
 
             // Si colisiona con el tarro
+            // Colisión con el playable
             if (gota.colisionaCon(tarro)) {
-                if (gota.esMala()) {
-                    tarro.herir();
-                    gotas.removeIndex(i);
+                gota.interactWith(tarro);
+                gotas.removeIndex(i);
 
-                    if (tarro.getVidas() <= 0) {
-                        return false; // Game over
-                    }
-                } else {
-                    tarro.sumarPuntos(10);
-                    dropSound.play();
-                    gotas.removeIndex(i);
+                // Verificar game over si el playable quedó sin vidas
+                if (tarro.getVidas() <= 0) {
+                    return false;
                 }
             }
         }

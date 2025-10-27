@@ -7,39 +7,28 @@ import com.badlogic.gdx.math.MathUtils;
 import puppy.code.schema.GameConfig;
 import puppy.code.schema.RainConfig;
 
-public class Gota extends GameObject {
-    private int tipo; // RainConfig.TYPE_FRIENDLY o TYPE_EVIL
-
-    public Gota(Texture texturaBuena, Texture texturaMala) {
+public abstract class Gota extends GameObject {
+    public Gota(Texture texture) {
         super(
             MathUtils.random(0, GameConfig.SCREEN_WIDTH - RainConfig.DROP_WIDTH),
             GameConfig.SCREEN_HEIGHT,
             RainConfig.DROP_WIDTH,
             RainConfig.DROP_HEIGHT,
             0,
-            RainConfig.DROP_SPEED
+            RainConfig.DROP_SPEED,
+            texture
         );
-
-        // Determinar tipo de gota
-        this.tipo = MathUtils.random(1, 10) < 5
-            ? RainConfig.TYPE_EVIL
-            : RainConfig.TYPE_FRIENDLY;
-
-        // Asignar textura según tipo
-        this.texture = (this.tipo == RainConfig.TYPE_EVIL)
-            ? texturaMala
-            : texturaBuena;
     }
 
     @Override
     public void update(float delta) {
-        this.y -= super.velY * delta;
+        this.y -= velY * delta;
         this.area.setPosition(this.x, this.y);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(this.texture, this.x, this.y);
+        batch.draw(texture, x, y);
     }
 
     @Override
@@ -47,11 +36,5 @@ public class Gota extends GameObject {
         return this.y + this.height < 0;
     }
 
-    public boolean esMala() {
-        return this.tipo == RainConfig.TYPE_EVIL;
-    }
-
-    public boolean esBuena() {
-        return this.tipo == RainConfig.TYPE_FRIENDLY;
-    }
+    public abstract void interactWith(Playable entity);
 }

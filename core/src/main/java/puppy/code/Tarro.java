@@ -29,10 +29,10 @@ public class Tarro extends GameObject implements Playable {
             BucketConfig.WIDTH,                                     // ancho
             BucketConfig.HEIGHT,                                    // alto
             BucketConfig.SPEED,
-            0
+            0,
+            tex
         );
 
-        this.texture = tex;
         this.sonidoHerido = ss;
         this.vidas = BucketConfig.START_LIVES;
         this.puntos = 0;
