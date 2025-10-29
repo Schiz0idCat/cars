@@ -1,6 +1,6 @@
 package puppy.code.schema;
 
-public class BucketConfig {
+public class CarConfig {
     public static final int WIDTH = 64;
     public static final int HEIGHT = 64;
     public static final int START_LIVES = 3;

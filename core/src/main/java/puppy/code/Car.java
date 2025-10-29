@@ -1,6 +1,6 @@
 package puppy.code;
 
-import puppy.code.schema.BucketConfig;
+import puppy.code.schema.CarConfig;
 import puppy.code.schema.GameConfig;
 
 import com.badlogic.gdx.Gdx;
@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.MathUtils;
  * Representa el tarro controlado por el jugador.
  * Puede moverse, recibir daño y acumular puntos.
  */
-public class Tarro extends GameObject implements Playable, Entity {
+public class Car extends GameObject implements Playable, Entity {
     private final Sound sonidoHerido;
     private int vidas;
     private int puntos;
@@ -22,22 +22,22 @@ public class Tarro extends GameObject implements Playable, Entity {
     private int tiempoHeridoMax;
     private float tiempoHeridoActual;
 
-    public Tarro(Texture tex, Sound ss) {
+    public Car(Texture tex, Sound ss) {
         super(
-            GameConfig.SCREEN_WIDTH / 2f - BucketConfig.WIDTH / 2f, // posición x
-            BucketConfig.START_Y_POSITION,                          // posición y
-            BucketConfig.WIDTH,                                     // ancho
-            BucketConfig.HEIGHT,                                    // alto
-            BucketConfig.SPEED,
+            GameConfig.SCREEN_WIDTH / 2f - CarConfig.WIDTH / 2f, // posición x
+            CarConfig.START_Y_POSITION,                          // posición y
+            CarConfig.WIDTH,                                     // ancho
+            CarConfig.HEIGHT,                                    // alto
+            CarConfig.SPEED,
             0,
             tex
         );
 
         this.sonidoHerido = ss;
-        this.vidas = BucketConfig.START_LIVES;
+        this.vidas = CarConfig.START_LIVES;
         this.puntos = 0;
         this.herido = false;
-        this.tiempoHeridoMax = BucketConfig.DAMAGE_ANIMATION_TICKS;
+        this.tiempoHeridoMax = CarConfig.DAMAGE_ANIMATION_TICKS;
         this.tiempoHeridoActual = 0;
     }
 
@@ -58,7 +58,7 @@ public class Tarro extends GameObject implements Playable, Entity {
     }
 
     public void crear() {
-        this.setPos(GameConfig.SCREEN_WIDTH / 2f - this.width / 2f, BucketConfig.START_Y_POSITION);
+        this.setPos(GameConfig.SCREEN_WIDTH / 2f - this.width / 2f, CarConfig.START_Y_POSITION);
     }
 
     @Override
