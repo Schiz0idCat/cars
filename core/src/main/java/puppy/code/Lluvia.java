@@ -29,12 +29,7 @@ public class Lluvia {
     }
 
     private void crearGotaDeLluvia() {
-        boolean buena = Math.random() < 0.5;
-
-        Gota nuevaGota = buena
-            ? new GoodNPC(dropSound)
-            : new EvilNPC();
-
+        Gota nuevaGota = NPCSupplier.createRandom();
         this.gotas.add(nuevaGota);
         this.lastDropTime = TimeUtils.nanoTime();
     }

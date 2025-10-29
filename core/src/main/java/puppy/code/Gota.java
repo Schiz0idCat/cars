@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import puppy.code.schema.GameConfig;
 import puppy.code.schema.RainConfig;
 
-public abstract class Gota extends GameObject {
+public abstract class Gota extends GameObject implements Collidable {
     public Gota(Texture texture) {
         super(
             MathUtils.random(0, GameConfig.SCREEN_WIDTH - RainConfig.DROP_WIDTH),
@@ -36,5 +36,6 @@ public abstract class Gota extends GameObject {
         return this.y + this.height < 0;
     }
 
+    @Override
     public abstract void interactWith(Playable entity);
 }

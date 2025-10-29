@@ -26,6 +26,9 @@ public class GameScreen implements Screen {
         this.game = game;
         this.batch = game.getBatch();
         this.font = game.getFont();
+
+        NPCRegister.registerAll();
+
         // load the images for the droplet and the bucket, 64x64 pixels each
         Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
         this.tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound);

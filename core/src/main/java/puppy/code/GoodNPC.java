@@ -1,14 +1,16 @@
 package puppy.code;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
+@NPCType
 public class GoodNPC extends Gota {
     private final Sound dropSound;
 
-    public GoodNPC(Sound dropSound) {
+    public GoodNPC() {
         super(new Texture("drop.png"));
-        this.dropSound = dropSound;
+        this.dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
     }
 
     @Override
