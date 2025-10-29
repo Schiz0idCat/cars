@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.MathUtils;
  * Representa el tarro controlado por el jugador.
  * Puede moverse, recibir daño y acumular puntos.
  */
-public class Tarro extends GameObject implements Playable {
+public class Tarro extends GameObject implements Playable, Entity {
     private final Sound sonidoHerido;
     private int vidas;
     private int puntos;
@@ -79,6 +79,11 @@ public class Tarro extends GameObject implements Playable {
             this.herido = false;
             this.tiempoHeridoActual = 0;
         }
+    }
+
+    @Override
+    public void interactWith(Playable entity) {
+        this.herir();
     }
 
     @Override

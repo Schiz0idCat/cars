@@ -8,7 +8,7 @@ import puppy.code.NPCSupplier;
 
 public class NPCRegister {
     public static void registerAll() {
-        // Escanea el paquete "puppy.code" para todas las clases con @NPCType
+        // Escanea "puppy.code" en busca de @NPCType para cargarlo en memoria
         Reflections reflections = new Reflections("puppy.code");
         Set<Class<?>> npcClasses = reflections.getTypesAnnotatedWith(NPCType.class);
 

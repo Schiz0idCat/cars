@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import puppy.code.schema.GameConfig;
 import puppy.code.schema.RainConfig;
 
-public abstract class Gota extends GameObject implements Collidable {
+public abstract class Gota extends GameObject implements Entity {
     public Gota(Texture texture) {
         super(
             MathUtils.random(0, GameConfig.SCREEN_WIDTH - RainConfig.DROP_WIDTH),
@@ -37,5 +37,7 @@ public abstract class Gota extends GameObject implements Collidable {
     }
 
     @Override
-    public abstract void interactWith(Playable entity);
+    public boolean colisionaCon(GameObject otro) {
+        return this.getArea().overlaps(otro.getArea());
+    }
 }

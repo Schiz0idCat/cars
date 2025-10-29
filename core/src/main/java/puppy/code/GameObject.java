@@ -3,7 +3,7 @@ package puppy.code;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
-public abstract class GameObject implements Drawable {
+public abstract class GameObject {
     protected float x;
     protected float y;
     protected float width;
