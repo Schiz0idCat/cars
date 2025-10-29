@@ -3,9 +3,6 @@ package puppy.code;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
-/**
- * Gota “buena”: suma puntos y reproduce un sonido.
- */
 public class GoodNPC extends Gota {
     private final Sound dropSound;
 
