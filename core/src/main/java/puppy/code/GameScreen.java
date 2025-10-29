@@ -18,7 +18,7 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private BitmapFont font;
     private Car car;
-    private Lluvia lluvia;
+    private TrafficManager trafficManager;
 
     //boolean activo = true;
 
@@ -34,10 +34,10 @@ public class GameScreen implements Screen {
         this.car = new Car(new Texture(Gdx.files.internal("car.png")),hurtSound);
 
         // load the drop sound effect and the rain background "music"
-        Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+        Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("cash.wav"));
 
-        Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        this.lluvia = new Lluvia(dropSound, rainMusic);
+        Music trafficMusic = Gdx.audio.newMusic(Gdx.files.internal("traffic.mp3"));
+        this.trafficManager = new TrafficManager(dropSound, trafficMusic);
 
         // camera
         this.camera = new OrthographicCamera();
@@ -47,7 +47,7 @@ public class GameScreen implements Screen {
         this.car.crear();
 
         // creacion de la lluvia
-        this.lluvia.crear();
+        this.trafficManager.crear();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class GameScreen implements Screen {
         this.batch.setProjectionMatrix(camera.combined);
         this.batch.begin();
         //dibujar textos
-        this.font.draw(batch, "Gotas totales: " + car.getPuntos(), 5, GameConfig.SCREEN_HEIGHT - 5);
+        this.font.draw(batch, "Dinero: " + car.getPuntos(), 5, GameConfig.SCREEN_HEIGHT - 5);
         this.font.draw(batch, "Vidas : " + car.getVidas(), GameConfig.SCREEN_WIDTH - 130, GameConfig.SCREEN_HEIGHT - 5);
         this.font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2 - 50, GameConfig.SCREEN_HEIGHT - 5);
 
@@ -68,8 +68,8 @@ public class GameScreen implements Screen {
             // movimiento del car
             this.car.update(delta);
 
-            // caída de la lluvia
-            if (!this.lluvia.actualizarMovimiento(this.car)) {
+            // caída del tráfico
+            if (!this.trafficManager.actualizarMovimiento(this.car)) {
                 if (this.game.getHigherScore() < this.car.getPuntos()) {
                     this.game.setHigherScore(car.getPuntos());
                 }
@@ -82,7 +82,7 @@ public class GameScreen implements Screen {
         }
 
         this.car.draw(batch);
-        this.lluvia.actualizarDibujoLluvia(batch);
+        this.trafficManager.actualizarDibujoNpcs(batch);
 
         this.batch.end();
     }
@@ -93,8 +93,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        // continuar con sonido de lluvia
-        this.lluvia.continuar();
+        // continuar con sonido del tráfico
+        this.trafficManager.continuar();
     }
 
     @Override
@@ -104,7 +104,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-        this.lluvia.pausar();
+        this.trafficManager.pausar();
         this.game.setScreen(new PausaScreen(game, this));
     }
 
@@ -116,6 +116,6 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         this.car.destruir();
-        this.lluvia.destruir();
+        this.trafficManager.destruir();
     }
 }
