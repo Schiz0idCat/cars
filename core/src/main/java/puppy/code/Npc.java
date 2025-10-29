@@ -5,17 +5,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
 import puppy.code.schema.GameConfig;
-import puppy.code.schema.RainConfig;
+import puppy.code.schema.NpcConfig;
 
-public abstract class Gota extends GameObject implements Entity {
-    public Gota(Texture texture) {
+public abstract class Npc extends GameObject implements Entity {
+    public Npc(Texture texture) {
         super(
-            MathUtils.random(0, GameConfig.SCREEN_WIDTH - RainConfig.DROP_WIDTH),
+            MathUtils.random(0, GameConfig.SCREEN_WIDTH - NpcConfig.NPC_WIDTH),
             GameConfig.SCREEN_HEIGHT,
-            RainConfig.DROP_WIDTH,
-            RainConfig.DROP_HEIGHT,
+            NpcConfig.NPC_WIDTH,
+            NpcConfig.NPC_HEIGHT,
             0,
-            RainConfig.DROP_SPEED,
+            NpcConfig.NPC_SPEED,
             texture
         );
     }
