@@ -34,7 +34,7 @@ public class Lluvia {
         this.lastDropTime = TimeUtils.nanoTime();
     }
 
-    public boolean actualizarMovimiento(Tarro tarro) {
+    public boolean actualizarMovimiento(GameObject tarro) {
         float delta = Gdx.graphics.getDeltaTime();
 
         // Generar gotas nuevas
@@ -56,11 +56,13 @@ public class Lluvia {
             // Si colisiona con el tarro
             // Colisión con el playable
             if (gota.colisionaCon(tarro)) {
-                gota.interactWith(tarro);
+                Playable entity = (Playable) tarro;
+
+                gota.interactWith(entity);
                 gotas.removeIndex(i);
 
                 // Verificar game over si el playable quedó sin vidas
-                if (tarro.getVidas() <= 0) {
+                if (entity.getVidas() <= 0) {
                     return false;
                 }
             }
