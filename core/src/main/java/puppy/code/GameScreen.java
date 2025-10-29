@@ -75,7 +75,7 @@ public class GameScreen implements Screen {
                 dispose();
             }
         } else {
-            this.tarro.actualizarHerida(delta);
+            this.tarro.animacionHerido(delta);
         }
 
         this.tarro.draw(batch);

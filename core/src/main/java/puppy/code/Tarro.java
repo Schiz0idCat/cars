@@ -70,7 +70,8 @@ public class Tarro extends GameObject implements Playable {
         this.sonidoHerido.play();
     }
 
-    public void actualizarHerida(float delta) {
+    @Override
+    public void animacionHerido(float delta) {
         if (!this.herido) return;
 
         this.tiempoHeridoActual -= delta * GameConfig.FPS; // si DAMAGE_ANIMATION_TICKS son frames

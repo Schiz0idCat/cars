@@ -7,6 +7,8 @@ public interface Playable {
 
     boolean getHerido();
 
+    void animacionHerido(float delta);
+
     void herir();
 
     void sumarPuntos(int pp);
