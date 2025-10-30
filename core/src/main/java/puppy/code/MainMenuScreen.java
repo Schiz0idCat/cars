@@ -32,8 +32,8 @@ public class MainMenuScreen implements Screen {
 
 		batch.begin();
         font.getData().setScale(2f, 2f); // si quieres mantener
-        font.draw(batch, "Bienvenido a Recolecta Gotas!!! ", 100, GameConfig.SCREEN_HEIGHT / 2 + 50);
-        font.draw(batch, "Toca en cualquier lugar para comenzar!", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
+        font.draw(batch, "¡Bienvenido a Crazy Driver!!!! ", 100, GameConfig.SCREEN_HEIGHT / 2 + 50);
+        font.draw(batch, "Toca para empezar a conducir!!!!", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
 
 		batch.end();
 

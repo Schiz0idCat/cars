@@ -3,7 +3,7 @@ package puppy.code;
 import org.reflections.Reflections;
 import java.util.Set;
 
-import puppy.code.Gota;
+import puppy.code.Npc;
 import puppy.code.NPCSupplier;
 
 public class NPCRegister {
@@ -14,9 +14,9 @@ public class NPCRegister {
 
         for (Class<?> cls : npcClasses) {
             // Solo registrar clases que extienden Gota
-            if (Gota.class.isAssignableFrom(cls)) {
+            if (Npc.class.isAssignableFrom(cls)) {
                 @SuppressWarnings("unchecked")
-                Class<? extends Gota> npcClass = (Class<? extends Gota>) cls;
+                Class<? extends Npc> npcClass = (Class<? extends Npc>) cls;
                 NPCSupplier.register(npcClass);
             }
         }

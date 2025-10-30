@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Input;
 
 import puppy.code.schema.GameConfig;
 
@@ -17,8 +18,9 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private BitmapFont font;
-    private Tarro tarro;
-    private Lluvia lluvia;
+    private Car car;
+    private TrafficManager trafficManager;
+    private Texture backgroundTexture;
 
     //boolean activo = true;
 
@@ -29,60 +31,67 @@ public class GameScreen implements Screen {
 
         NPCRegister.registerAll();
 
+        //load the image for the background
+        this.backgroundTexture = new Texture(Gdx.files.internal("background.png")); 
+
         // load the images for the droplet and the bucket, 64x64 pixels each
         Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-        this.tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound);
+        this.car = new Car(new Texture(Gdx.files.internal("car.png")),hurtSound);
 
         // load the drop sound effect and the rain background "music"
-        Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+        Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("cash.wav"));
 
-        Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        this.lluvia = new Lluvia(dropSound, rainMusic);
+        Music trafficMusic = Gdx.audio.newMusic(Gdx.files.internal("traffic.ogg"));
+        this.trafficManager = new TrafficManager(dropSound, trafficMusic);
 
         // camera
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         this.batch = new SpriteBatch();
-        // creacion del tarro
-        this.tarro.crear();
+        // creacion del car
+        this.car.crear();
 
         // creacion de la lluvia
-        this.lluvia.crear();
+        this.trafficManager.crear();
     }
 
     @Override
     public void render(float delta) {
-        //limpia la pantalla con color azul obscuro.
-        ScreenUtils.clear(0, 0, 0.2f, 1);
         //actualizar matrices de la cámara
         this.camera.update();
         //actualizar
         this.batch.setProjectionMatrix(camera.combined);
         this.batch.begin();
+        //limpia la pantalla con color azul obscuro.
+        batch.draw(backgroundTexture, 0, 0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         //dibujar textos
-        this.font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, GameConfig.SCREEN_HEIGHT - 5);
-        this.font.draw(batch, "Vidas : " + tarro.getVidas(), GameConfig.SCREEN_WIDTH - 130, GameConfig.SCREEN_HEIGHT - 5);
+        this.font.draw(batch, "Dinero: " + car.getPuntos(), 5, GameConfig.SCREEN_HEIGHT - 5);
+        this.font.draw(batch, "Vidas : " + car.getVidas(), GameConfig.SCREEN_WIDTH - 130, GameConfig.SCREEN_HEIGHT - 5);
         this.font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2 - 50, GameConfig.SCREEN_HEIGHT - 5);
 
-        if (!this.tarro.getHerido()) {
-            // movimiento del tarro
-            this.tarro.update(delta);
+        if (!this.car.getHerido()) {
+            // movimiento del car
+            this.car.update(delta);
 
-            // caída de la lluvia
-            if (!this.lluvia.actualizarMovimiento(this.tarro)) {
-                if (this.game.getHigherScore() < this.tarro.getPuntos()) {
-                    this.game.setHigherScore(tarro.getPuntos());
+            // caída del tráfico
+            if (!this.trafficManager.actualizarMovimiento(this.car)) {
+                if (this.game.getHigherScore() < this.car.getPuntos()) {
+                    this.game.setHigherScore(car.getPuntos());
                 }
 
                 this.game.setScreen(new GameOverScreen(game));
                 dispose();
             }
         } else {
-            this.tarro.animacionHerido(delta);
+            this.car.animacionHerido(delta);
         }
 
-        this.tarro.draw(batch);
-        this.lluvia.actualizarDibujoLluvia(batch);
+        this.car.draw(batch);
+        this.trafficManager.actualizarDibujoNpcs(batch);
+
+        if(Gdx.input.isKeyPressed(Input.Keys.P)) {
+            pause();
+        }
 
         this.batch.end();
     }
@@ -93,8 +102,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        // continuar con sonido de lluvia
-        this.lluvia.continuar();
+        // continuar con sonido del tráfico
+        this.trafficManager.continuar();
     }
 
     @Override
@@ -104,7 +113,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-        this.lluvia.pausar();
+        this.trafficManager.pausar();
         this.game.setScreen(new PausaScreen(game, this));
     }
 
@@ -115,7 +124,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        this.tarro.destruir();
-        this.lluvia.destruir();
+        this.car.destruir();
+        this.trafficManager.destruir();
+        this.backgroundTexture.dispose();
     }
 }
