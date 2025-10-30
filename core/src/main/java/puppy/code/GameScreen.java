@@ -19,6 +19,7 @@ public class GameScreen implements Screen {
     private BitmapFont font;
     private Car car;
     private TrafficManager trafficManager;
+    private Texture backgroundTexture;
 
     //boolean activo = true;
 
@@ -28,6 +29,9 @@ public class GameScreen implements Screen {
         this.font = game.getFont();
 
         NPCRegister.registerAll();
+
+        //load the image for the background
+        this.backgroundTexture = new Texture(Gdx.files.internal("background.png")); 
 
         // load the images for the droplet and the bucket, 64x64 pixels each
         Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
@@ -52,13 +56,13 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        //limpia la pantalla con color azul obscuro.
-        ScreenUtils.clear(0, 0, 0.2f, 1);
         //actualizar matrices de la cámara
         this.camera.update();
         //actualizar
         this.batch.setProjectionMatrix(camera.combined);
         this.batch.begin();
+        //limpia la pantalla con color azul obscuro.
+        batch.draw(backgroundTexture, 0, 0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         //dibujar textos
         this.font.draw(batch, "Dinero: " + car.getPuntos(), 5, GameConfig.SCREEN_HEIGHT - 5);
         this.font.draw(batch, "Vidas : " + car.getVidas(), GameConfig.SCREEN_WIDTH - 130, GameConfig.SCREEN_HEIGHT - 5);
@@ -117,5 +121,6 @@ public class GameScreen implements Screen {
     public void dispose() {
         this.car.destruir();
         this.trafficManager.destruir();
+        this.backgroundTexture.dispose();
     }
 }

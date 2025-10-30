@@ -31,8 +31,8 @@ public class GameOverScreen implements Screen {
 
         this.batch.begin();
         this.camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-        this.font.draw(this.batch, "GAME OVER ", 100, GameConfig.SCREEN_HEIGHT / 2 + 50);
-        this.font.draw(this.batch, "Toca en cualquier lado para reiniciar.", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
+        this.font.draw(this.batch, "Chocaste, Suerte para la proxima!!!!", 100, GameConfig.SCREEN_HEIGHT / 2 + 50);
+        this.font.draw(this.batch, "Toca en cualquier lado para volver a intentarlo", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
         this.batch.end();
 
         if (Gdx.input.isTouched()) {
