@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
         // load the drop sound effect and the rain background "music"
         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("cash.wav"));
 
-        Music trafficMusic = Gdx.audio.newMusic(Gdx.files.internal("traffic.mp3"));
+        Music trafficMusic = Gdx.audio.newMusic(Gdx.files.internal("traffic.ogg"));
         this.trafficManager = new TrafficManager(dropSound, trafficMusic);
 
         // camera
