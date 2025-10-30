@@ -89,7 +89,7 @@ public class GameScreen implements Screen {
         this.car.draw(batch);
         this.trafficManager.actualizarDibujoNpcs(batch);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.P)) {
             pause();
         }
 
