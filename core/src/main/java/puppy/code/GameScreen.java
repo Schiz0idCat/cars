@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Input;
 
 import puppy.code.schema.GameConfig;
 
@@ -87,6 +88,10 @@ public class GameScreen implements Screen {
 
         this.car.draw(batch);
         this.trafficManager.actualizarDibujoNpcs(batch);
+
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            pause();
+        }
 
         this.batch.end();
     }
