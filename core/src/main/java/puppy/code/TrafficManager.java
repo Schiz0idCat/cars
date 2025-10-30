@@ -25,6 +25,7 @@ public class TrafficManager {
         crearNpc();
 
         this.trafficMusic.setLooping(true);
+        this.trafficMusic.setVolume(0.2f);  
         this.trafficMusic.play();
     }
 
