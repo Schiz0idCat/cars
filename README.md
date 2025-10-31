@@ -36,11 +36,17 @@ java -jar lwjgl3/build/libs/GameLluviaMenu2024-1.0.0.jar # ejecutar el .jar
 ## Controles
 ```toml
 [move]
-left = "A"
-right = "D"
+left = "A / ←"
+right = "D / →"
 
 [system]
+start game = "Enter / Click"
+exit game = "ESC"
 pause = "P"
+resume = "ENTER / Click"
+restart "ENTER"
+
+
 ```
 
 ## Gameplay
