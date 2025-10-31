@@ -44,7 +44,7 @@ start = "Enter / Click"
 exit = "ESC"
 pause = "P"
 resume = "ENTER / Click"
-restart "ENTER"
+restart = "ENTER"
 
 
 ```
