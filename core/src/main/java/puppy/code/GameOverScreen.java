@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.graphics.Texture;
 
 import puppy.code.schema.GameConfig;
 
@@ -14,13 +15,15 @@ public class GameOverScreen implements Screen {
     private SpriteBatch batch;
     private BitmapFont font;
     private OrthographicCamera camera;
+    private Texture gameOverTexture;
 
     public GameOverScreen(final GameLluviaMenu game) {
         this.game = game;
         this.batch = game.getBatch();
         this.font = game.getFont();
         this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, 800, 480);
+        this.camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+        gameOverTexture = new Texture(Gdx.files.internal("gameOver.png"));
     }
 
     @Override
@@ -31,6 +34,8 @@ public class GameOverScreen implements Screen {
 
         this.batch.begin();
         this.camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+        this.batch.draw(gameOverTexture, 0, 0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+        this.font.getData().setScale(2f, 2f); // si quieres mantener
         this.font.draw(this.batch, "Chocaste, Suerte para la proxima!!!!", 100, GameConfig.SCREEN_HEIGHT / 2 + 50);
         this.font.draw(this.batch, "Toca en cualquier lado para volver a intentarlo", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
         this.batch.end();

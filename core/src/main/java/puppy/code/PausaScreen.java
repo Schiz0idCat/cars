@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import puppy.code.schema.GameConfig;
+import com.badlogic.gdx.graphics.Texture;
 
 public class PausaScreen implements Screen {
 	private final GameLluviaMenu game;
@@ -15,6 +16,7 @@ public class PausaScreen implements Screen {
 	private SpriteBatch batch;
 	private BitmapFont font;
 	private OrthographicCamera camera;
+    private Texture pauseTexture;
 
 	public PausaScreen (final GameLluviaMenu game, GameScreen juego) {
 		this.game = game;
@@ -23,16 +25,19 @@ public class PausaScreen implements Screen {
         this.font = game.getFont();
 		camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+        pauseTexture = new Texture(Gdx.files.internal("pause.png"));
 	}
 
 	@Override
 	public void render(float delta) {
-		ScreenUtils.clear(0, 0, 1.0f, 0.5f);
+		ScreenUtils.clear(0, 0, 0, 1);
 
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
+        batch.draw(pauseTexture, 0, 0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+        font.getData().setScale(2f, 2f); // si quieres mantener
         font.draw(batch, "Juego en Pausa ", 100, GameConfig.SCREEN_HEIGHT - 150);
         font.draw(batch, "Toca en cualquier lado para continuar !!!", 100, GameConfig.SCREEN_HEIGHT - 200);
         batch.end();
@@ -75,6 +80,7 @@ public class PausaScreen implements Screen {
 
     @Override
     public void dispose() {
+        pauseTexture.dispose();
         // TODO Auto-generated method stub
 
     }

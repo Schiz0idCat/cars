@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.graphics.Texture;
 
 import puppy.code.schema.GameConfig;
 
@@ -14,6 +15,7 @@ public class MainMenuScreen implements Screen {
 	private SpriteBatch batch;
 	private BitmapFont font;
 	private OrthographicCamera camera;
+	private Texture startScreenTexture;
 
 	public MainMenuScreen(final GameLluviaMenu game) {
 		this.game = game;
@@ -21,6 +23,7 @@ public class MainMenuScreen implements Screen {
         this.font = game.getFont();
 		camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+		startScreenTexture = new Texture(Gdx.files.internal("startScreen.png"));
 	}
 
 	@Override
@@ -31,6 +34,7 @@ public class MainMenuScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
+		batch.draw(startScreenTexture, 0, 0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         font.getData().setScale(2f, 2f); // si quieres mantener
         font.draw(batch, "¡Bienvenido a Crazy Driver!!!! ", 100, GameConfig.SCREEN_HEIGHT / 2 + 50);
         font.draw(batch, "Toca para empezar a conducir!!!!", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
