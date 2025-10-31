@@ -36,24 +36,16 @@ java -jar lwjgl3/build/libs/GameLluviaMenu2024-1.0.0.jar # ejecutar el .jar
 ## Controles
 ```toml
 [move]
-left = "A / ←"
-right = "D / →"
+left = ["A", "LeftArrow"]
+right = ["D", "RightArrow"]
 
 [system]
-start = "Enter / Click"
-exit = "ESC"
+start = ["Enter", "MouseLeft"]
 pause = "P"
-resume = "ENTER / Click"
-restart = "ENTER"
-
+resume = ["Enter", "MouseLeft"]
+restart = "Enter"
+exit = "Esc"
 ```
-Para pausar presiona P.
-
-Para reanudar, haz clic o presiona ENTER.
-
-En el menú principal, puedes iniciar con ENTER o clic.
-
-En la pantalla de Game Over, presiona ENTER para volver a jugar o ESC para salir.
 
 ## Gameplay
 Los autos de policía hacen daño, mientras que las bolsas de dinero suman puntos.
