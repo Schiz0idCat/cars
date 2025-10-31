@@ -37,7 +37,8 @@ public class GameOverScreen implements Screen {
         this.batch.draw(gameOverTexture, 0, 0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         this.font.getData().setScale(2f, 2f); // si quieres mantener
         this.font.draw(this.batch, "Chocaste, Suerte para la proxima!!!!", 100, GameConfig.SCREEN_HEIGHT / 2 + 50);
-        this.font.draw(this.batch, "Toca en cualquier lado para volver a intentarlo", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
+        this.font.draw(this.batch, "Presiona ENTER para volver a intentarlo ", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
+        this.font.draw(this.batch, "Presiona ESCAPE para salir del juego.", 100, GameConfig.SCREEN_HEIGHT / 2 - 150);
         this.batch.end();
 
         if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ENTER)) {
