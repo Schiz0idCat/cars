@@ -1,0 +1,78 @@
+classDiagram
+    direction TB
+
+    %% ===== Clases de Dominio =====
+
+    class Car {
+        - Sound sonidoHerido
+        - int vidas
+        - int puntos
+        - boolean herido
+        - int tiempoHeridoMax
+        - float tiempoHeridoActual
+        + Car(tex: Texture, ss: Sound)
+        + crear()
+        + herir()
+        + animacionHerido(delta: float)
+        + sumarPuntos(pp: int)
+        + update(delta: float)
+        + draw(batch: SpriteBatch)
+        + isOutOfScreen() boolean
+        + interactWith(entity: Playable)
+        + getVidas() int
+        + getPuntos() int
+        + getHerido() boolean
+    }
+
+    class Npc {
+        <<abstract>>
+        + Npc(texture: Texture)
+        + update(delta: float)
+        + draw(batch: SpriteBatch)
+        + isOutOfScreen() boolean
+        + interactWith(entity: Playable)
+        + colisionaCon(otro: GameObject) boolean
+    }
+
+    class Police {
+        + Police()
+        + interactWith(entity: Playable)
+    }
+
+    class Cash {
+        - Sound cashSound
+        + Cash()
+        + interactWith(entity: Playable)
+    }
+
+    class TrafficManager {
+        - Array~Npc~ npcs
+        - Sound cashSound
+        - Music trafficMusic
+        - long lastDropTime
+        + TrafficManager(cashSound: Sound, trafficMusic: Music)
+        + crear()
+        + actualizarMovimiento(car: GameObject) boolean
+        + actualizarDibujoNpcs(batch: SpriteBatch)
+        + pausar()
+        + continuar()
+        + destruir()
+    }
+
+    %% ===== Relaciones de Herencia =====
+
+    Police --|> Npc : extends
+    Cash --|> Npc : extends
+
+    %% ===== Relaciones de Composición/Uso =====
+
+    TrafficManager "1" *-- "0..*" Npc : gestiona
+    TrafficManager --> Car : colisiones
+
+    %% ===== Notas =====
+
+    note for Car "Representa al jugador. Gestiona vidas, puntos y estado de daño"
+    note for Npc "Clase abstracta para objetos que caen desde arriba"
+    note for Police "NPC que causa daño al jugador"
+    note for Cash "NPC que otorga puntos al jugador"
+    note for TrafficManager "Gestiona el ciclo de vida de los NPCs:creación, movimiento, colisiones y audio"
