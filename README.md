@@ -46,8 +46,14 @@ pause = "P"
 resume = "ENTER / Click"
 restart = "ENTER"
 
-
 ```
+Para pausar presiona P.
+
+Para reanudar, haz clic o presiona ENTER.
+
+En el menú principal, puedes iniciar con ENTER o clic.
+
+En la pantalla de Game Over, presiona ENTER para volver a jugar o ESC para salir.
 
 ## Gameplay
 Los autos de policía hacen daño, mientras que las bolsas de dinero suman puntos.
