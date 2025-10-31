@@ -40,8 +40,8 @@ left = "A / ←"
 right = "D / →"
 
 [system]
-start game = "Enter / Click"
-exit game = "ESC"
+start = "Enter / Click"
+exit = "ESC"
 pause = "P"
 resume = "ENTER / Click"
 restart "ENTER"
