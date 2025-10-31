@@ -36,7 +36,7 @@ public class MainMenuScreen implements Screen {
 
 		batch.begin();
 		batch.draw(startScreenTexture, 0, 0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-        //font.getData().setScale(2f, 2f); // si quieres mantener
+        font.getData().setScale(2f, 2f); // si quieres mantener
         font.draw(batch, "¡Bienvenido a Crazy Driver!!!! ", 100, GameConfig.SCREEN_HEIGHT / 2 + 50);
         font.draw(batch, "Presiona ENTER o haz click para empezar a conducir!!!!", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
 		font.draw(batch, "Presiona ESCAPE para salir del juego.", 100, GameConfig.SCREEN_HEIGHT / 2 - 150);
