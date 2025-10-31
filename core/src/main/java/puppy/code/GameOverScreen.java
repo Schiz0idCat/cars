@@ -40,9 +40,12 @@ public class GameOverScreen implements Screen {
         this.font.draw(this.batch, "Toca en cualquier lado para volver a intentarlo", 100, GameConfig.SCREEN_HEIGHT / 2 - 50);
         this.batch.end();
 
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ENTER)) {
             this.game.setScreen(new GameScreen(this.game));
             dispose();
+        }
+        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE) || Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.BACKSPACE)) {
+            Gdx.app.exit();
         }
     }
 
