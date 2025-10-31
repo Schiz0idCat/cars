@@ -1,33 +1,54 @@
-# GameLluviaMenu2024
+El proyecto se centra en la creación de un videojuego de autos que esquiva a la polica y recolecta dinero.
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+* [Instalación](#Instalación)
+    * [Dependencias](#Dependencias)
+    * [Descarga](#Descarga)
+    * [Compilación](#Compilación)
+    * [Ejecución](#Ejecución)
+* [Uso](#Uso)
+    * [Controles](#Controles)
+    * [Gameplay](#Gameplay)
+* [Créditos](#Créditos)
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
+# Instalación
+## Dependencias
+- openJDK 17
+- gradle 9.2.0
 
-## Platforms
+## Descarga
+```bash
+git clone https://www.github.com/schiz0idcat/cars.git cars
+cd cars
+```
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
+## Compilación
+```bash
+./gradlew build # compilación
+java -jar lwjgl3/build/libs/GameLluviaMenu2024-1.0.0.jar # ejecutar el .jar
+```
 
-## Gradle
+## Ejecución
+```bash
+./gradlew run # ejecutar desde el código fuente
+```
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
+# Uso
+## Controles
+```toml
+[move]
+left = "A"
+right = "D"
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
+[system]
+pause = "P"
+```
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+## Gameplay
+Los autos de policía hacen daño, mientras que las bolsas de dinero suman puntos.
+El objetivo del juego es evitar a los policías y recoltectar la mayor cantidad de bolsas de dinero posible.
+
+# Créditos
+Este proyecto fue realizado por:
+- Agustín Guzmán [[GitHub](https://github.com/Schiz0idCat)]
+- Nicolás Leiva [[GitHub](https://github.com/nico0417)]
+- Felipe Márquez [[GitHub](https://github.com/fmarquezmu)]
