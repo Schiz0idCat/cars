@@ -21,6 +21,7 @@ public class GameScreen implements Screen {
     private Car car;
     private TrafficManager trafficManager;
     private Texture backgroundTexture;
+    private Texture pauseTexture;
 
     //boolean activo = true;
 
@@ -34,7 +35,7 @@ public class GameScreen implements Screen {
         //load the image for the background
         this.backgroundTexture = new Texture(Gdx.files.internal("background.png")); 
 
-        // load the images for the droplet and the bucket, 64x64 pixels each
+        // load the car texture and create the car object
         Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
         this.car = new Car(new Texture(Gdx.files.internal("car.png")),hurtSound);
 
