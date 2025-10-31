@@ -25,7 +25,7 @@ public class TrafficManager {
         crearNpc();
 
         this.trafficMusic.setLooping(true);
-        this.trafficMusic.setVolume(0.2f);  
+        this.trafficMusic.setVolume(0.2f);
         this.trafficMusic.play();
     }
 
@@ -45,7 +45,7 @@ public class TrafficManager {
 
         // Recorrer NPCs (de atrás hacia adelante por si se eliminan)
         for (int i = npcs.size - 1; i >= 0; i--) {
-            Npc npc = npcs.get(i);
+            Entity npc = npcs.get(i);
             npc.update(delta);
 
             // Si sale de pantalla, eliminarla
@@ -73,7 +73,7 @@ public class TrafficManager {
     }
 
     public void actualizarDibujoNpcs(SpriteBatch batch) {
-        for (Npc npc : npcs) {
+        for (Entity npc : npcs) {
             npc.draw(batch);
         }
     }
