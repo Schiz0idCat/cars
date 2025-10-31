@@ -39,10 +39,10 @@ public class PausaScreen implements Screen {
         batch.draw(pauseTexture, 0, 0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         font.getData().setScale(2f, 2f); // si quieres mantener
         font.draw(batch, "Juego en Pausa ", 100, GameConfig.SCREEN_HEIGHT - 150);
-        font.draw(batch, "Toca en cualquier lado para continuar !!!", 100, GameConfig.SCREEN_HEIGHT - 200);
+        font.draw(batch, "Presiona Enter o toca en cualquier lado para continuar !!!", 100, GameConfig.SCREEN_HEIGHT - 200);
         batch.end();
 
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ENTER)) {
             game.setScreen(juego);
             dispose();
         }
