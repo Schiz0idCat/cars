@@ -6,9 +6,12 @@ import com.badlogic.gdx.math.MathUtils;
 
 import puppy.code.schema.GameConfig;
 import puppy.code.schema.NpcConfig;
+import puppy.code.strategies.Interaction;
 
 public abstract class Npc extends GameObject implements Entity {
-    public Npc(Texture texture) {
+    protected Interaction interactionStrategy;
+
+    public Npc(Texture texture, Interaction strategy) {
         super(
             MathUtils.random(0, GameConfig.SCREEN_WIDTH - NpcConfig.NPC_WIDTH),
             GameConfig.SCREEN_HEIGHT,
@@ -18,6 +21,8 @@ public abstract class Npc extends GameObject implements Entity {
             NpcConfig.NPC_SPEED,
             texture
         );
+
+        this.interactionStrategy = strategy;
     }
 
     @Override
