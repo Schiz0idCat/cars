@@ -121,9 +121,4 @@ public class GameScreen implements Screen {
     public void resume() {
 
     }
-
-    @Override
-    public void dispose() {
-
-    }
 }
