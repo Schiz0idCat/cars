@@ -33,17 +33,17 @@ public class GameScreen implements Screen {
         NPCRegister.registerAll();
 
         //load the image for the background
-        this.backgroundTexture = new Texture(Gdx.files.internal("background.png")); 
+        this.backgroundTexture = AssetManager.getInstance().getTexture("background"); 
 
-        // load the car texture and create the car object
-        Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-        this.car = new Car(new Texture(Gdx.files.internal("car.png")),hurtSound);
+        // load the car texture and sound, create the car object
+        Sound hurtSound = AssetManager.getInstance().getSound("hurt");
+        this.car = new Car(AssetManager.getInstance().getTexture("car"), hurtSound);
+        
+        // load the cash sound effect and the traffic background music
+        Sound cashSound = AssetManager.getInstance().getSound("cash");
 
-        // load the drop sound effect and the rain background "music"
-        Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("cash.wav"));
-
-        Music trafficMusic = Gdx.audio.newMusic(Gdx.files.internal("traffic.ogg"));
-        this.trafficManager = new TrafficManager(dropSound, trafficMusic);
+        Music trafficMusic = AssetManager.getInstance().getMusic("traffic");
+        this.trafficManager = new TrafficManager(cashSound, trafficMusic);
 
         // camera
         this.camera = new OrthographicCamera();
@@ -51,7 +51,6 @@ public class GameScreen implements Screen {
         this.batch = new SpriteBatch();
         // creacion del car
         this.car.crear();
-
         // creacion de la lluvia
         this.trafficManager.crear();
     }
@@ -125,8 +124,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        this.car.destruir();
-        this.trafficManager.destruir();
-        this.backgroundTexture.dispose();
+
     }
 }
