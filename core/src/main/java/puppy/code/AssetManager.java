@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class AssetManager implements Disposable {
     private static final AssetManager instance = new AssetManager();
-    
+
     private Map<String, Texture> textures;
     private Map<String, Sound> sounds;
     private Map<String, Music> musics;
@@ -29,7 +29,7 @@ public class AssetManager implements Disposable {
         textures.put("police", new Texture(Gdx.files.internal("police.png")));
         textures.put("cash", new Texture(Gdx.files.internal("cash.png")));
         textures.put("background", new Texture(Gdx.files.internal("backGround.png")));
-        textures.put("startScreen", new Texture(Gdx.files.internal("startScreen.png")));
+        textures.put("start", new Texture(Gdx.files.internal("startScreen.png")));
         textures.put("gameOver", new Texture(Gdx.files.internal("gameOver.png")));
         textures.put("pause", new Texture(Gdx.files.internal("pauseScreen.png")));
 

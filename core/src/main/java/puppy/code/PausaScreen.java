@@ -25,7 +25,7 @@ public class PausaScreen implements Screen {
         this.font = game.getFont();
 		camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-        pauseTexture = AssetManager.getInstance().getTexture("pauseScreen");
+        pauseTexture = AssetManager.getInstance().getTexture("pause");
 	}
 
 	@Override

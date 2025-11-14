@@ -24,7 +24,7 @@ public class MainMenuScreen implements Screen {
         this.font = game.getFont();
 		camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-		startScreenTexture = AssetManager.getInstance().getTexture("startScreen");
+		startScreenTexture = AssetManager.getInstance().getTexture("start");
 	}
 
 	@Override
