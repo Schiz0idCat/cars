@@ -7,7 +7,7 @@ import puppy.code.strategies.Damage;
 public class Police extends Npc {
     public Police() {
         super(
-            new Texture("police.png"),
+            AssetManager.getInstance().getTexture("police"),
             new Damage()
         );
     }
