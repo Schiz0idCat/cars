@@ -12,6 +12,7 @@ public class GameLluviaMenu extends Game {
     public void create() {
         this.batch = new SpriteBatch();
         this.font = new BitmapFont(); // use libGDX's default Arial font
+        AssetManager.getInstance().load();
         this.setScreen(new MainMenuScreen(this));
     }
 
@@ -20,6 +21,7 @@ public class GameLluviaMenu extends Game {
     }
 
     public void dispose() {
+        AssetManager.getInstance().dispose();
         this.batch.dispose();
         this.font.dispose();
     }

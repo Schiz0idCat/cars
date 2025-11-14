@@ -26,9 +26,6 @@ public abstract class GameObject {
     }
 
     public void destruir() {
-        if (this.texture != null) {
-            this.texture.dispose();
-        }
     }
 
     public Rectangle getArea() {

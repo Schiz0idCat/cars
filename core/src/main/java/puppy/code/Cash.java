@@ -11,10 +11,10 @@ public class Cash extends Npc {
 
     public Cash() {
         super(
-            new Texture("cash.png"),
+            AssetManager.getInstance().getTexture("cash"),
             new Reward()
         );
-        this.cashSound = Gdx.audio.newSound(Gdx.files.internal("cash.wav"));
+        this.cashSound = AssetManager.getInstance().getSound("cash");
     }
 
     @Override

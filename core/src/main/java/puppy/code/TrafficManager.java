@@ -87,11 +87,5 @@ public class TrafficManager {
     }
 
     public void destruir() {
-        cashSound.dispose();
-        trafficMusic.dispose();
-
-        for (Npc npc : npcs) {
-            npc.destruir();
-        }
     }
 }

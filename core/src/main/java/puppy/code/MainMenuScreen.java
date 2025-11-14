@@ -24,7 +24,7 @@ public class MainMenuScreen implements Screen {
         this.font = game.getFont();
 		camera = new OrthographicCamera();
         camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-		startScreenTexture = new Texture(Gdx.files.internal("startScreen.png"));
+		startScreenTexture = AssetManager.getInstance().getTexture("startScreen");
 	}
 
 	@Override
@@ -81,11 +81,8 @@ public class MainMenuScreen implements Screen {
 		// TODO Auto-generated method stub
 
 	}
-
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-
-	}
-
+    public void dispose() {
+        // TODO Auto-generated method stub
+    }
 }

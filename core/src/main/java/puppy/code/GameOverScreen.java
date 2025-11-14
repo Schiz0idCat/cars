@@ -23,7 +23,7 @@ public class GameOverScreen implements Screen {
         this.font = game.getFont();
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-        gameOverTexture = new Texture(Gdx.files.internal("gameOver.png"));
+        gameOverTexture = AssetManager.getInstance().getTexture("gameOver");
     }
 
     @Override
@@ -79,10 +79,9 @@ public class GameOverScreen implements Screen {
         // TODO Auto-generated method stub
 
     }
-
+    
     @Override
     public void dispose() {
         // TODO Auto-generated method stub
-
     }
 }
