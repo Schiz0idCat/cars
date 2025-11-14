@@ -80,6 +80,7 @@ public class GameScreen implements Screen {
                 }
 
                 this.game.setScreen(new GameOverScreen(game));
+                this.trafficManager.pausar();
                 dispose();
             }
         } else {
