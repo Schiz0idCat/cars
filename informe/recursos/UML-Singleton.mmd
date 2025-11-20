@@ -1,0 +1,23 @@
+---
+config:
+  layout: dagre
+---
+classDiagram
+    direction TB
+    class AssetManager {
+        <<Singleton>>
+        - static AssetManager instance
+        - Map textures
+        - AssetManager()
+        + static getInstance() AssetManager
+        + getTexture(String key) Texture
+    }
+    class Police {
+        + Police()
+    }
+    class Cash {
+        + Cash()
+    }
+    Police ..> AssetManager : llama a getInstance()
+    Cash ..> AssetManager : llama a getInstance()
+    note for Police "En el constructor: AssetManager.getInstance().getTexture('police')"

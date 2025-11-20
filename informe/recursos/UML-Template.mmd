@@ -1,0 +1,37 @@
+---
+config:
+  layout: elk
+---
+classDiagram
+    direction TB
+    class Npc {
+        <<Abstract Class>>
+        # Interaction interactionStrategy
+        + Npc(Texture, Interaction)
+        + update(delta) 
+        + draw(batch)
+        + isOutOfScreen()
+        + colisionaCon(GameObject)
+        + interactWith(Playable)
+    }
+    note for Npc "Define el esqueleto (Template): 
+    1. Movimiento (update)
+    2. Dibujado (draw)
+    3. Posición aleatoria"
+    class Police {
+        <<Concrete Class>>
+        + Police()
+        + interactWith(Playable)
+    }
+    note for Police "Usa el template de Npc. 
+    Define detalles: Textura policía + Daño"
+    class Cash {
+        <<Concrete Class>>
+        - Sound cashSound
+        + Cash()
+        + interactWith(Playable)
+    }
+    note for Cash "Usa el template de Npc.
+    Define detalles: Textura dinero + Recompensa"
+    Npc <|-- Police : extiende
+    Npc <|-- Cash : extiende

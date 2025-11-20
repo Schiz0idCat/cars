@@ -1,0 +1,36 @@
+---
+config:
+  layout: dagre
+  theme: redux
+---
+classDiagram
+    direction TB
+    class Interaction {
+        <<Interface>>
+        + interact(Playable entity)
+    }
+    class Damage {
+        + interact(Playable entity)
+    }
+    class Reward {
+        + interact(Playable entity)
+    }
+    class Npc {
+        <<Abstract Context>>
+        # Interaction interactionStrategy
+        + Npc(Texture, Interaction)
+        + interactWith(Playable)
+    }
+    class Police {
+        + Police()
+    }
+    class Cash {
+        + Cash()
+    }
+    Interaction <|.. Damage : implementa
+    Interaction <|.. Reward : implementa
+    Npc o-- Interaction : usa estrategia
+    Police --|> Npc : extiende
+    Cash --|> Npc : extiende
+    note for Police "Pasa 'new Damage()' al constructor de Npc"
+    note for Cash "Pasa 'new Reward()' al constructor de Npc"

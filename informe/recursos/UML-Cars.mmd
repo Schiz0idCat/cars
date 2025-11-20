@@ -1,72 +1,32 @@
+---
+config:
+  layout: elk
+---
 classDiagram
     direction TB
-
-    %% ===== LibGDX base (external) =====
-
-    class LGame {
-    }
-    note for LGame "com.badlogic.gdx.Game"
-
-    class LScreen {
-    }
-    note for LScreen "com.badlogic.gdx.Screen"
-
-    class LSpriteBatch {
-    }
-    note for LSpriteBatch "com.badlogic.gdx.graphics.g2d.SpriteBatch"
-
-    class LTexture {
-    }
-    note for LTexture "com.badlogic.gdx.graphics.Texture"
-
-    class LSound {
-    }
-    note for LSound "com.badlogic.gdx.audio.Sound"
-
-    class LMusic {
-    }
-    note for LMusic "com.badlogic.gdx.audio.Music"
-
-    class LCamera {
-    }
-    note for LCamera "com.badlogic.gdx.graphics.OrthographicCamera"
-
-    class LRectangle {
-    }
-    note for LRectangle "com.badlogic.gdx.math.Rectangle"
-
-    class LArray {
-    }
-    note for LArray "com.badlogic.gdx.utils.Array"
-
-
-    %% ===== Domain =====
-
     class GameObject {
-        - float x
-        - float y
-        - float width
-        - float height
-        - float velX
-        - float velY
-        - Texture texture
-        - Rectangle area
-        + destruir()
+        <<Abstract>>
+        # float x, y
+        # float width, height
+        # float velX, velY
+        # Rectangle area
+        # Texture texture
+        + GameObject(x, y, width, height, velX, velY, tex)
         + getArea() Rectangle
-        + setPos(x: float, y: float)
+        + setPos(x, y)
         + colisionaCon(otro: GameObject) boolean
+        + destruir()
     }
-
     class Entity {
+        <<Interface>>
         + draw(batch: SpriteBatch)
         + update(delta: float)
         + isOutOfScreen() boolean
         + interactWith(entity: Playable)
         + colisionaCon(entity: GameObject) boolean
     }
-    note for Entity "Interface"
-
     class Playable {
+        <<Interface>>
         + getVidas() int
         + getPuntos() int
         + getHerido() boolean
@@ -74,163 +34,111 @@ classDiagram
         + herir()
         + sumarPuntos(pp: int)
     }
-    note for Playable "Interface"
-
-    class Gota {
-        + Gota(texture: Texture)
-        + update(delta: float)
-        + draw(batch: SpriteBatch)
-        + isOutOfScreen() boolean
-        + colisionaCon(otro: GameObject) boolean
+    class Interaction {
+        <<Interface>>
+        + interact(entity: Playable)
     }
-
-    class Tarro {
+    class Car {
         - Sound sonidoHerido
         - int vidas
         - int puntos
         - boolean herido
-        - int tiempoHeridoMax
         - float tiempoHeridoActual
         + crear()
+        + update(delta)
+        + draw(batch)
         + herir()
-        + animacionHerido(delta: float)
-        + sumarPuntos(pp: int)
-        + update(delta: float)
-        + draw(batch: SpriteBatch)
-        + isOutOfScreen() boolean
+        + sumarPuntos(int)
     }
-
-    class GoodNPC {
-        - Sound dropSound
+    class Npc {
+        <<Abstract>>
+        # Interaction interactionStrategy
+        + Npc(texture, strategy)
+        + update(delta)
+        + draw(batch)
         + interactWith(entity: Playable)
     }
-
-    class EvilNPC {
+    class Police {
+        + Police()
         + interactWith(entity: Playable)
     }
-
-    class NPCType {
+    class Cash {
+        - Sound cashSound
+        + Cash()
+        + interactWith(entity: Playable)
     }
-    note for NPCType "Annotation"
-
-    class Lluvia {
-        - Array gotas
-        - Sound dropSound
-        - Music rainMusic
+    class Damage {
+        + interact(entity: Playable)
+    }
+    class Reward {
+        + interact(entity: Playable)
+    }
+    class TrafficManager {
+        - Array~Npc~ npcs
+        - Music trafficMusic
         - long lastDropTime
         + crear()
-        + actualizarMovimiento(tarro: GameObject) boolean
-        + actualizarDibujoLluvia(batch: SpriteBatch)
+        + actualizarMovimiento(car: GameObject) boolean
+        + actualizarDibujoNpcs(batch)
         + pausar()
         + continuar()
-        + destruir()
     }
-
-    class NPCRegister {
-        + registerAll()
-    }
-
     class NPCSupplier {
-        - registered : List
+        - static List registered
         + register(npcClass)
-        + createRandom() : Gota
+        + createRandom() Npc
     }
-
+    class NPCRegister {
+        + static registerAll()
+    }
+    class NPCType {
+        <<Annotation>>
+    }
+    class AssetManager {
+        <<Singleton>>
+        - static AssetManager instance
+        - Map textures
+        - Map sounds
+        - Map musics
+        + getInstance()
+        + load()
+        + getTexture(key)
+        + getSound(key)
+    }
     class GameLluviaMenu {
         - SpriteBatch batch
         - BitmapFont font
         - int higherScore
+        - Preferences prefs
         + create()
         + render()
-        + dispose()
-        + getBatch() SpriteBatch
-        + getFont() BitmapFont
-        + getHigherScore() int
-        + setHigherScore(higherScore: int)
     }
-
     class GameScreen {
-        - GameLluviaMenu game
-        - OrthographicCamera camera
-        - SpriteBatch batch
-        - BitmapFont font
-        - Tarro tarro
-        - Lluvia lluvia
-        + render(delta: float)
-        + pause()
-        + show()
-        + dispose()
+        - Car car
+        - TrafficManager trafficManager
+        + render(delta)
     }
-
-    class MainMenuScreen {
-        - GameLluviaMenu game
-        - SpriteBatch batch
-        - BitmapFont font
-        - OrthographicCamera camera
-        + render(delta: float)
-    }
-
-    class GameOverScreen {
-        - GameLluviaMenu game
-        - SpriteBatch batch
-        - BitmapFont font
-        - OrthographicCamera camera
-        + render(delta: float)
-    }
-
-    class PausaScreen {
-        - GameLluviaMenu game
-        - GameScreen juego
-        - SpriteBatch batch
-        - BitmapFont font
-        - OrthographicCamera camera
-        + render(delta: float)
-    }
-
-
-    %% ===== Inheritance / Implementation =====
-
-    Gota --|> GameObject
-    Gota ..> Entity
-    Tarro --|> GameObject
-    Tarro ..> Entity
-    Tarro ..> Playable
-    GoodNPC --|> Gota
-    EvilNPC --|> Gota
-
-
-    %% ===== Annotation links =====
-
-    NPCType .. GoodNPC : annotates
-    NPCType .. EvilNPC : annotates
-
-
-    %% ===== Associations =====
-
-    GameObject --> LTexture : uses
-    GameObject --> LRectangle : uses
-    Gota --> LTexture : uses
-    Tarro --> LSound : uses
-    Tarro --> LTexture : uses
-    Tarro --> LSpriteBatch : draw()
-    Lluvia --> Gota : contiene *
-    Lluvia --> LSound : uses
-    Lluvia --> LMusic : uses
-    Lluvia --> LSpriteBatch : draw()
-    Lluvia --> GameObject : colisiones
-    NPCRegister --> NPCSupplier : registra
-    NPCRegister ..> NPCType : lee anotación
-    NPCSupplier ..> Gota : fabrica
-    GameLluviaMenu --|> LGame
-    GameScreen ..> LScreen
-    MainMenuScreen ..> LScreen
-    GameOverScreen ..> LScreen
-    PausaScreen ..> LScreen
-    GameScreen *-- Tarro
-    GameScreen *-- Lluvia
-    GameScreen --> LSpriteBatch
-    GameScreen --> LCamera
-    MainMenuScreen --> GameLluviaMenu
-    GameOverScreen --> GameLluviaMenu
-    PausaScreen --> GameLluviaMenu
-    PausaScreen --> GameScreen
+    Car --|> GameObject
+    Car ..|> Entity
+    Car ..|> Playable
+    Npc --|> GameObject
+    Npc ..|> Entity
+    Police --|> Npc
+    Cash --|> Npc
+    Damage ..|> Interaction
+    Reward ..|> Interaction
+    GameScreen *-- Car
+    GameScreen *-- TrafficManager
+    TrafficManager o-- Npc : gestiona lista
+    Npc o-- Interaction : usa
+    Police ..> Damage : inyecta en constructor
+    Cash ..> Reward : inyecta en constructor
+    TrafficManager ..> NPCSupplier : pide NPCs
+    NPCRegister ..> NPCSupplier : registra clases
+    NPCRegister ..> NPCType : busca anotación
+    Police ..> NPCType : anotada
+    Cash ..> NPCType : anotada
+    GameScreen ..> AssetManager : usa recursos
+    Police ..> AssetManager
+    Cash ..> AssetManager
+    GameLluviaMenu --> GameScreen : cambia pantalla

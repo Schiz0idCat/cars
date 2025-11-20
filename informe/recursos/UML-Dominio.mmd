@@ -1,0 +1,112 @@
+---
+config:
+  layout: elk
+---
+classDiagram
+    direction TB
+    class GameObject {
+        <<Abstract>>
+        # float x, y
+        # float width, height
+        # float velX, velY
+        # Rectangle area
+        # Texture texture
+        + getArea() Rectangle
+        + setPos(x, y)
+        + colisionaCon(GameObject) boolean
+        + destruir()
+    }
+    class Entity {
+        <<Interface>>
+        + update(delta)
+        + draw(batch)
+        + isOutOfScreen() boolean
+        + interactWith(Playable)
+    }
+    class Playable {
+        <<Interface>>
+        + getVidas() int
+        + getPuntos() int
+        + herir()
+        + sumarPuntos(int)
+    }
+    class Car {
+        - int vidas
+        - int puntos
+        - boolean herido
+        - Sound sonidoHerido
+        + crear()
+        + update(delta)
+        + draw(batch)
+        + interactWith(Playable)
+    }
+    class Npc {
+        <<Abstract>>
+        # Interaction interactionStrategy
+        + Npc(texture, strategy)
+        + update(delta)
+        + draw(batch)
+        + interactWith(Playable)
+    }
+    class Police {
+        + Police()
+        + interactWith(Playable)
+    }
+    class Cash {
+        - Sound cashSound
+        + Cash()
+        + interactWith(Playable)
+    }
+    class Interaction {
+        <<Interface>>
+        + interact(Playable entity)
+    }
+    class Damage {
+        + interact(Playable entity)
+    }
+    class Reward {
+        + interact(Playable entity)
+    }
+    class GameScreen {
+        - OrthographicCamera camera
+        - SpriteBatch batch
+    }
+    class TrafficManager {
+        - Array~Npc~ npcs
+        - Music trafficMusic
+        - long lastDropTime
+        + crear()
+        + actualizarMovimiento(Car) boolean
+        + actualizarDibujoNpcs(Batch)
+    }
+    class AssetManager {
+        <<Singleton>>
+        - static AssetManager instance
+        + getInstance()
+        + getTexture(key)
+        + getSound(key)
+    }
+    class NPCSupplier {
+        + static createRandom() Npc
+        + static register(Class)
+    }
+    GameObject <|-- Car
+    GameObject <|-- Npc
+    Npc <|-- Police
+    Npc <|-- Cash
+    Entity <|.. Car
+    Entity <|.. Npc
+    Playable <|.. Car
+    GameScreen *-- Car : posee
+    GameScreen *-- TrafficManager : posee
+    TrafficManager "1" o-- "0..*" Npc : gestiona lista
+    TrafficManager ..> NPCSupplier : usa para crear
+    GameScreen ..> AssetManager : obtiene recursos
+    Car ..> AssetManager
+    Police ..> AssetManager
+    Cash ..> AssetManager
+    Npc o-- Interaction : tiene estrategia
+    Interaction <|.. Damage
+    Interaction <|.. Reward
+    Police ..> Damage : inyecta
+    Cash ..> Reward : inyecta
